@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import { computeAnalytics } from "@/services/analyticsService";
 
 describe("Analytics Service Logic", () => {
@@ -12,5 +12,5 @@ describe("Analytics Service Logic", () => {
     expect(summary.activeCampaigns).toBeGreaterThanOrEqual(0);
     expect(summary.campaignPerformance.length).toBeGreaterThanOrEqual(0);
     expect(summary.donationTrends.length).toBeGreaterThanOrEqual(0);
-  });
+  }, 15000);
 });

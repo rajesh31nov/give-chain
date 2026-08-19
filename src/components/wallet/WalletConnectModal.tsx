@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import { Button } from "@/components/ui/button";
+import React, { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { useStellarWallet } from "@/hooks/useStellarWallet";
 import { Wallet, Shield, AlertCircle, X, ExternalLink } from "lucide-react";
 
@@ -15,6 +15,23 @@ export const WalletConnectModal: React.FC<WalletConnectModalProps> = ({
   onClose,
 }) => {
   const { connect, isConnecting, error } = useStellarWallet();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -23,12 +40,19 @@ export const WalletConnectModal: React.FC<WalletConnectModalProps> = ({
     onClose();
   };
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-      <div className="relative w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-2xl">
+  const modalContent = (
+    <div
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-in fade-in duration-200"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) {
+          onClose();
+        }
+      }}
+    >
+      <div className="relative w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-2xl animate-in zoom-in-95 duration-200">
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 text-slate-400 hover:text-white transition-colors"
+          className="absolute right-4 top-4 text-slate-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-slate-800"
           aria-label="Close modal"
         >
           <X className="h-5 w-5" />
@@ -57,10 +81,10 @@ export const WalletConnectModal: React.FC<WalletConnectModalProps> = ({
           <button
             onClick={handleConnect}
             disabled={isConnecting}
-            className="w-full flex items-center justify-between p-4 rounded-xl border border-slate-800 bg-slate-950/60 hover:bg-slate-800/80 hover:border-emerald-500/40 transition-all text-left group disabled:opacity-50"
+            className="w-full flex items-center justify-between p-4 rounded-xl border border-slate-800 bg-slate-950/80 hover:bg-slate-800/90 hover:border-emerald-500/40 transition-all text-left group disabled:opacity-50 cursor-pointer"
           >
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center font-bold text-purple-400">
+              <div className="w-10 h-10 rounded-lg bg-purple-500/20 border border-purple-500/30 flex items-center justify-center font-bold text-purple-400 text-lg">
                 F
               </div>
               <div>
@@ -73,7 +97,7 @@ export const WalletConnectModal: React.FC<WalletConnectModalProps> = ({
               </div>
             </div>
             <span className="text-xs font-medium text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
-              Installed / Supported
+              {isConnecting ? "Connecting..." : "Installed / Supported"}
             </span>
           </button>
 
@@ -81,10 +105,10 @@ export const WalletConnectModal: React.FC<WalletConnectModalProps> = ({
             href="https://freighter.app"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full flex items-center justify-between p-3 rounded-lg text-xs text-slate-400 hover:text-slate-200 transition-colors"
+            className="w-full flex items-center justify-between p-3 rounded-lg text-xs text-slate-400 hover:text-slate-200 hover:bg-slate-800/40 transition-colors"
           >
             <span>Don&apos;t have Freighter installed?</span>
-            <span className="flex items-center space-x-1 text-emerald-400">
+            <span className="flex items-center space-x-1 text-emerald-400 font-medium">
               <span>Install Freighter</span>
               <ExternalLink className="h-3 w-3" />
             </span>
@@ -100,4 +124,10 @@ export const WalletConnectModal: React.FC<WalletConnectModalProps> = ({
       </div>
     </div>
   );
+
+  if (!mounted) {
+    return modalContent;
+  }
+
+  return createPortal(modalContent, document.body);
 };
