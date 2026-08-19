@@ -4,13 +4,24 @@ import {
   getStoredTransactions,
   saveTransactionRecord,
   pollTransactionConfirmation,
+  getAllTransactionsCombined,
 } from "@/services/transactionService";
 
 export const useTransactionCenter = () => {
   const [transactions, setTransactions] = useState<TransactionRecord[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const refreshTransactions = useCallback(() => {
-    setTransactions(getStoredTransactions());
+  const refreshTransactions = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const combined = await getAllTransactionsCombined();
+      setTransactions(combined);
+    } catch (e) {
+      console.warn("Failed to load combined transactions:", e);
+      setTransactions(getStoredTransactions());
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -37,6 +48,7 @@ export const useTransactionCenter = () => {
 
   return {
     transactions,
+    isLoading,
     recordNewTx,
     retryTx,
     refreshTransactions,
