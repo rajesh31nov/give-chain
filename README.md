@@ -22,6 +22,7 @@
 - [Key Features](#-key-features)
 - [Tech Stack](#-tech-stack)
 - [Local Development Quickstart](#-local-development-quickstart)
+- [Live URL of the Website](#-live-url-of-the-website)
 - [Testing & Quality Verification](#-testing--quality-verification)
 - [CI/CD Pipeline](#-cicd-pipeline)
 - [Evaluator & Judge Quickstart](#-evaluator--judge-quickstart)
@@ -240,6 +241,26 @@ jobs:
 ```
 
 ---
+
+## Screenshots of the Website
+
+### Landing Page
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/07ac792b-9712-4810-aa7e-81ef2c1736dd" />
+
+### Campaign Page
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/a927a252-3969-4a9c-9dab-fc90e5879b13" />
+
+### Activity Page
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/8d6f1ae6-d6c2-4028-942e-ffd561edc65f" />
+
+### Transaction Page
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e5862673-7f50-42e8-b3e5-91c32d595c0f" />
+
+### Activity Page
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/00beb3b7-9d75-4979-8692-1eec1aab125c" />
+
+---
+
 
 ## 🎯 Evaluator & Judge Quickstart
 
