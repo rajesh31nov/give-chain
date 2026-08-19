@@ -112,6 +112,35 @@ fn test_double_distribution_prevention_exceeds_allocation() {
 }
 
 #[test]
+#[should_panic]
+fn test_unapproved_beneficiary_batch_rejection() {
+    let env = Env::default();
+    env.mock_all_auths();
+
+    let admin = Address::generate(&env);
+    let charity = Address::generate(&env);
+    let recipient = Address::generate(&env);
+
+    let contract_id = env.register(DistributionContract, ());
+    let client = DistributionContractClient::new(&env, &contract_id);
+
+    client.initialize(&admin);
+
+    let campaign_id = 1u64;
+    client.register_beneficiary(&charity, &campaign_id, &recipient, &500_0000000);
+    // Notice: NOT approving recipient
+
+    let mut items = Vec::new(&env);
+    items.push_back(BatchItem {
+        recipient: recipient.clone(),
+        amount: 200_0000000,
+    });
+
+    // Creating batch for unapproved beneficiary should panic
+    client.create_distribution_batch(&charity, &campaign_id, &items);
+}
+
+#[test]
 fn test_full_inter_contract_donation_to_distribution_flow() {
     let env = Env::default();
     env.mock_all_auths();

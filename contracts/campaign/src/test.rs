@@ -116,3 +116,30 @@ fn test_cannot_donate_to_draft_campaign() {
     // Donating to a Draft campaign should fail / panic
     client.donate(&donor, &campaign_id, &500_0000000);
 }
+
+#[test]
+#[should_panic]
+fn test_zero_donation_rejection() {
+    let env = Env::default();
+    env.mock_all_auths();
+
+    let admin = Address::generate(&env);
+    let charity = Address::generate(&env);
+    let donor = Address::generate(&env);
+    let token_client = create_token_contract(&env, &admin);
+
+    let campaign_contract_id = env.register(CampaignContract, ());
+    let client = CampaignContractClient::new(&env, &campaign_contract_id);
+
+    client.initialize(&admin, &token_client.address);
+    let campaign_id = client.create_campaign(
+        &charity,
+        &String::from_str(&env, "Cause"),
+        &String::from_str(&env, "Desc"),
+        &1_000_0000000,
+    );
+    client.activate_campaign(&charity, &campaign_id);
+
+    // Donating 0 XLM should panic
+    client.donate(&donor, &campaign_id, &0);
+}
