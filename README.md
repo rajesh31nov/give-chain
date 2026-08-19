@@ -181,6 +181,11 @@ Open `http://localhost:3000` in your browser.
 
 ---
 
+## 💻 Live URL of the Website
+URL: https://charity-fund-eta.vercel.app/
+
+---
+
 ## 🧪 Testing & Quality Verification
 
 GiveChain includes a complete testing suite:
