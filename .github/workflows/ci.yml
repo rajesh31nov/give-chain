@@ -1,0 +1,62 @@
+name: Continuous Integration & Quality Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  frontend-ci:
+    name: Frontend CI (Next.js & React)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Frontend Dependencies
+        run: npm ci
+
+      - name: TypeScript Typecheck
+        run: npm run typecheck
+
+      - name: ESLint Code Quality Verification
+        run: npm run lint
+
+      - name: Run Vitest Unit & Component Tests
+        run: npm run test
+
+      - name: Build Next.js Production Bundle
+        run: npm run build
+        env:
+          NEXT_PUBLIC_STELLAR_NETWORK: testnet
+          NEXT_PUBLIC_SOROBAN_RPC_URL: https://soroban-testnet.stellar.org
+
+  contracts-ci:
+    name: Soroban Smart Contracts CI (Rust & WASM)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Rust Toolchain (wasm32 target)
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - name: Rust Cargo Caching
+        uses: Swatinem/rust-cache@v2
+
+      - name: Run Soroban Contract Tests
+        run: cargo test
+
+      - name: Compile Optimized Soroban WASM Binaries
+        run: cargo build --target wasm32-unknown-unknown --release
