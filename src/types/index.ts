@@ -55,3 +55,37 @@ export interface TxState {
   hash: string | null;
   error: string | null;
 }
+
+export type EventType =
+  | "campaign_created"
+  | "campaign_status_changed"
+  | "donation_received"
+  | "batch_distributed"
+  | "beneficiary_registered"
+  | "beneficiary_approved"
+  | "batch_created"
+  | "batch_executed";
+
+export interface NormalizedEvent {
+  id: string; // Unique deduplication ID
+  type: EventType;
+  timestamp: number;
+  ledger: number;
+  transactionHash: string;
+  contractId: string;
+  campaignId: string;
+  actor: string;
+  amount?: string;
+  metadata?: Record<string, any>;
+}
+
+export interface TransactionRecord {
+  hash: string;
+  type: string;
+  campaignId?: string;
+  campaignTitle?: string;
+  amount?: string;
+  status: TxLifecycleStatus;
+  timestamp: number;
+  error?: string | null;
+}

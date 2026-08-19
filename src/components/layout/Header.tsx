@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { WalletButton } from "@/components/wallet/WalletButton";
-import { HeartHandshake, ShieldCheck, LayoutDashboard, Layers } from "lucide-react";
+import { HeartHandshake, ShieldCheck, LayoutDashboard, Layers, Activity, Receipt } from "lucide-react";
 
 export const Header: React.FC = () => {
   return (
@@ -34,10 +34,26 @@ export const Header: React.FC = () => {
             </Link>
 
             <Link
+              href="/activity"
+              className="flex items-center space-x-1.5 text-sm font-medium text-slate-300 hover:text-white transition-colors"
+            >
+              <Activity className="h-4 w-4 text-teal-400" />
+              <span>Activity Feed</span>
+            </Link>
+
+            <Link
+              href="/transactions"
+              className="flex items-center space-x-1.5 text-sm font-medium text-slate-300 hover:text-white transition-colors"
+            >
+              <Receipt className="h-4 w-4 text-cyan-400" />
+              <span>Transaction Center</span>
+            </Link>
+
+            <Link
               href="/dashboard"
               className="flex items-center space-x-1.5 text-sm font-medium text-slate-300 hover:text-white transition-colors"
             >
-              <LayoutDashboard className="h-4 w-4 text-teal-400" />
+              <LayoutDashboard className="h-4 w-4 text-purple-400" />
               <span>Dashboard</span>
             </Link>
           </nav>

@@ -4,6 +4,7 @@ import React, { use } from "react";
 import Link from "next/link";
 import { useCampaignDetails } from "@/hooks/useCampaigns";
 import { DonationForm } from "@/components/campaigns/DonationForm";
+import { ActivityFeedList } from "@/components/activity/ActivityFeedList";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { formatXLM } from "@/lib/utils";
@@ -11,9 +12,8 @@ import {
   ArrowLeft,
   Building2,
   ShieldCheck,
-  TrendingUp,
   Tag,
-  Share2,
+  Activity,
 } from "lucide-react";
 
 export default function CampaignDetailPage({
@@ -82,7 +82,7 @@ export default function CampaignDetailPage({
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Left column: Image, Description, Progress Stats */}
+        {/* Left column: Image, Description, Progress Stats, Recent Campaign Activity */}
         <div className="lg:col-span-2 space-y-6">
           {campaign.imageUrl && (
             <div className="h-80 w-full overflow-hidden rounded-2xl border border-slate-800 bg-slate-900">
@@ -129,6 +129,15 @@ export default function CampaignDetailPage({
                 <span className="font-bold text-sm text-amber-400">{formatXLM(remainingNum)}</span>
               </div>
             </div>
+          </div>
+
+          {/* Campaign Recent Activity Feed */}
+          <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-4">
+            <h3 className="text-lg font-bold text-white flex items-center space-x-2">
+              <Activity className="h-5 w-5 text-emerald-400" />
+              <span>Recent Campaign Activity</span>
+            </h3>
+            <ActivityFeedList campaignIdFilter={campaign.id} limit={5} />
           </div>
         </div>
 
