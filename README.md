@@ -20,11 +20,13 @@
 - [Role-Based Access Control (RBAC)](#-role-based-access-control-rbac)
 - [Deployed Testnet Contracts & Verified Transactions](#-deployed-testnet-contracts--verified-transactions)
 - [Key Features](#-key-features)
+- [Deployed Smart Contract](#deployed-smart-contract)
 - [Tech Stack](#-tech-stack)
 - [Local Development Quickstart](#-local-development-quickstart)
 - [Live URL of the Website](#-live-url-of-the-website)
 - [Testing & Quality Verification](#-testing--quality-verification)
 - [CI/CD Pipeline](#-cicd-pipeline)
+- [Screenshots of the Website](#screenshots-of-the-website)
 - [Evaluator & Judge Quickstart](#-evaluator--judge-quickstart)
 - [Security & Upgrade Strategy](#-security--upgrade-strategy)
 - [Troubleshooting](#-troubleshooting)
@@ -124,6 +126,25 @@ GiveChain is fully deployed and verified on **Stellar Testnet**:
 5. **Beneficiary Approval**: [`ee5bd5d973...`](https://stellar.expert/explorer/testnet/tx/ee5bd5d973bf7d6adce6bc76123f879ac786ba5e8368b5ebfd74efded2c6afac) (*Admin approved beneficiary*).
 6. **Distribution Batch Creation**: [`dd1e95f5c0...`](https://stellar.expert/explorer/testnet/tx/dd1e95f5c0712f383bd2a9eeeb0de08c88438e7986460207d9658e0ffc6678e7) (*Created Batch #1*).
 7. **Real Inter-Contract Batch Distribution Payout**: [`eff854809f...`](https://stellar.expert/explorer/testnet/tx/eff854809ff8b5f4402ca81b6f7e5b6bd5fefd2d6e2b4761cbda6c5964efdd9a) (*50 XLM disbursed directly to beneficiary address*).
+
+---
+
+## 🌐 Deployed Smart Contract 
+
+### Campaign Contract
+- Network : Stellar Testnet
+- Contract Address : CDCZBBHKFAUSZO7JEGSQ3VAFFD3CZ3VI4THB4SWZWOGATZ4LNGGUN3BF
+- Contract Explorar : https://lab.stellar.org/smart-contracts/contract-explorer?$=network$id=testnet&label=Testnet&horizonUrl=https:////horizon-testnet.stellar.org&rpcUrl=https:////soroban-testnet.stellar.org&passphrase=Test%20SDF%20Network%20/;%20September%202015;&smartContracts$explorer$contractId=CDCZBBHKFAUSZO7JEGSQ3VAFFD3CZ3VI4THB4SWZWOGATZ4LNGGUN3BF;;
+
+<img width="1920" height="1080" alt="Screenshot (711)" src="https://github.com/user-attachments/assets/1327453a-61d3-4249-98ed-d731a6b2eeb7" />
+
+
+### Distribution Contract 
+- Network : Stellar Testnet
+- Contract Address : CDFLHHBOOH4WBNTLDVSGMMVDJRYFKDCS63KTUK4IUEVY6TGOV7KQY5XO
+- Contract Explorar : https://lab.stellar.org/smart-contracts/contract-explorer?$=network$id=testnet&label=Testnet&horizonUrl=https:////horizon-testnet.stellar.org&rpcUrl=https:////soroban-testnet.stellar.org&passphrase=Test%20SDF%20Network%20/;%20September%202015;&smartContracts$explorer$contractId=CDFLHHBOOH4WBNTLDVSGMMVDJRYFKDCS63KTUK4IUEVY6TGOV7KQY5XO;;
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/d54d3b4d-8211-40c4-92ed-5d34837d6048" />
 
 ---
 
@@ -242,7 +263,7 @@ jobs:
 
 ---
 
-## Screenshots of the Website
+## 🚀 Screenshots of the Website
 
 ### Landing Page
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/07ac792b-9712-4810-aa7e-81ef2c1736dd" />
