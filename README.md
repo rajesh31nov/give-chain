@@ -264,7 +264,7 @@ jobs:
 ---
 
 ## ⚡ Demo Video Link of Website
-Link (Drive) : https://drive.google.com/drive/folders/1Xr7Ihb8hOcXHjFmzGQ3kmFnLwepOFYLO?dmr=1&ec=wgc-drive-%5Bmodule%5D-goto
+Link (Drive) : https://drive.google.com/file/d/1VS9WgXgWX9ch51Z5YXs-edO5G7PWuj4l/view
 
 ---
 
