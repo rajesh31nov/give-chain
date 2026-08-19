@@ -1,4 +1,5 @@
 import {
+  Account,
   Address,
   Contract,
   TransactionBuilder,
@@ -11,11 +12,16 @@ import { CONTRACT_CONFIG, isContractConfigured } from "@/config/contracts";
 import { Campaign, CampaignStatus } from "@/types";
 import { getSorobanServer } from "./stellar";
 
+const DUMMY_SIMULATION_ACCOUNT = new Account(
+  "GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF",
+  "0"
+);
+
 // Realistic demo campaigns used when contracts are not yet deployed on Testnet
 export const DEMO_CAMPAIGNS: Campaign[] = [
   {
     id: "1",
-    owner: "GAYC...CHARITY1",
+    owner: "GBXCYAHNMBU5CIUGBUJNOTCMBLOMDL4CQHGWXNLV3Q2BZKQDJXUT3RHQ",
     title: "Flood Relief 2026",
     description: "Emergency food, clean water, and shelter supplies for flood victims across affected regions.",
     targetAmount: "5000",
@@ -28,7 +34,7 @@ export const DEMO_CAMPAIGNS: Campaign[] = [
   },
   {
     id: "2",
-    owner: "GAYC...CHARITY2",
+    owner: "GBXCYAHNMBU5CIUGBUJNOTCMBLOMDL4CQHGWXNLV3Q2BZKQDJXUT3RHQ",
     title: "Medical Aid Fund",
     description: "Providing essential medicines, surgical equipment, and health clinic support for rural areas.",
     targetAmount: "3000",
@@ -41,7 +47,7 @@ export const DEMO_CAMPAIGNS: Campaign[] = [
   },
   {
     id: "3",
-    owner: "GAYC...CHARITY3",
+    owner: "GBXCYAHNMBU5CIUGBUJNOTCMBLOMDL4CQHGWXNLV3Q2BZKQDJXUT3RHQ",
     title: "Education Support",
     description: "Funding textbooks, laptops, and classroom infrastructure for underprivileged youth.",
     targetAmount: "2500",
@@ -63,13 +69,10 @@ export const fetchCampaigns = async (): Promise<Campaign[]> => {
     const server = getSorobanServer();
     const contract = new Contract(CONTRACT_CONFIG.campaignContractId);
     
-    const countTx = new TransactionBuilder(
-      await server.getAccount(CONTRACT_CONFIG.campaignContractId),
-      {
-        fee: "100",
-        networkPassphrase: STELLAR_CONFIG.networkPassphrase,
-      }
-    )
+    const countTx = new TransactionBuilder(DUMMY_SIMULATION_ACCOUNT, {
+      fee: "100",
+      networkPassphrase: STELLAR_CONFIG.networkPassphrase,
+    })
       .addOperation(contract.call("get_campaign_count"))
       .setTimeout(30)
       .build();
@@ -101,13 +104,10 @@ export const fetchCampaignById = async (id: string): Promise<Campaign | null> =>
     const server = getSorobanServer();
     const contract = new Contract(CONTRACT_CONFIG.campaignContractId);
     
-    const readTx = new TransactionBuilder(
-      await server.getAccount(CONTRACT_CONFIG.campaignContractId),
-      {
-        fee: "100",
-        networkPassphrase: STELLAR_CONFIG.networkPassphrase,
-      }
-    )
+    const readTx = new TransactionBuilder(DUMMY_SIMULATION_ACCOUNT, {
+      fee: "100",
+      networkPassphrase: STELLAR_CONFIG.networkPassphrase,
+    })
       .addOperation(contract.call("get_campaign", xdr.ScVal.scvU64(new xdr.Uint64(BigInt(id)))))
       .setTimeout(30)
       .build();

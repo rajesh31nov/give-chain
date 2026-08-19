@@ -1,15 +1,15 @@
 export const CONTRACT_CONFIG = {
   campaignContractId:
-    process.env.NEXT_PUBLIC_CAMPAIGN_CONTRACT_ID || "",
+    process.env.NEXT_PUBLIC_CAMPAIGN_CONTRACT_ID ||
+    "CDCZBBHKFAUSZO7JEGSQ3VAFFD3CZ3VI4THB4SWZWOGATZ4LNGGUN3BF",
   distributionContractId:
-    process.env.NEXT_PUBLIC_DISTRIBUTION_CONTRACT_ID || "",
-  nativeTokenContractId:
-    "CDLZFC3SYJYDVR7P6JC4D243OHMYRVCH2W7H32M5CCJM55DQWN53LXER", // Native XLM SAC on Testnet
+    process.env.NEXT_PUBLIC_DISTRIBUTION_CONTRACT_ID ||
+    "CDFLHHBOOH4WBNTLDVSGMMVDJRYFKDCS63KTUK4IUEVY6TGOV7KQY5XO",
 };
 
 export const isContractConfigured = (): boolean => {
   return (
-    !!CONTRACT_CONFIG.campaignContractId &&
-    !!CONTRACT_CONFIG.distributionContractId
+    CONTRACT_CONFIG.campaignContractId.length > 0 &&
+    CONTRACT_CONFIG.campaignContractId.startsWith("C")
   );
 };
