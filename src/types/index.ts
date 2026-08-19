@@ -67,7 +67,7 @@ export type EventType =
   | "batch_executed";
 
 export interface NormalizedEvent {
-  id: string; // Unique deduplication ID
+  id: string;
   type: EventType;
   timestamp: number;
   ledger: number;
@@ -88,4 +88,41 @@ export interface TransactionRecord {
   status: TxLifecycleStatus;
   timestamp: number;
   error?: string | null;
+}
+
+export interface AnalyticsSummary {
+  totalFundsRaised: string;
+  totalFundsDistributed: string;
+  totalCampaigns: number;
+  activeCampaigns: number;
+  completedCampaigns: number;
+  totalDonationsCount: number;
+  averageDonationAmount: string;
+  totalBeneficiariesCount: number;
+  campaignPerformance: {
+    id: string;
+    title: string;
+    targetAmount: number;
+    raisedAmount: number;
+    distributedAmount: number;
+    progressPercentage: number;
+  }[];
+  donationTrends: {
+    period: string;
+    amount: number;
+    count: number;
+  }[];
+  distributionBreakdown: {
+    category: string;
+    amount: number;
+  }[];
+}
+
+export interface UserSettings {
+  displayCurrency: "XLM" | "USD";
+  usdRate: number; // Approximate XLM to USD rate
+  enableNotifications: boolean;
+  rpcEndpoint: string;
+  network: string;
+  autoRefreshInterval: number; // in ms
 }

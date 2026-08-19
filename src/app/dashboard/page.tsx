@@ -1,15 +1,28 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { useStellarWallet } from "@/hooks/useStellarWallet";
+import { useAnalytics } from "@/hooks/useAnalytics";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Wallet, ShieldCheck, Building2, User } from "lucide-react";
-import { truncateAddress } from "@/lib/utils";
+import { ActivityFeedList } from "@/components/activity/ActivityFeedList";
+import { formatXLM, truncateAddress } from "@/lib/utils";
+import {
+  Wallet,
+  ShieldCheck,
+  Building2,
+  User,
+  PlusCircle,
+  BarChart3,
+  HeartHandshake,
+  ArrowRight,
+} from "lucide-react";
 
 export default function DashboardPage() {
   const { isConnected, address, connect } = useStellarWallet();
+  const { data: analytics } = useAnalytics();
   const [activeRole, setActiveRole] = useState<"donor" | "charity" | "admin">("donor");
 
   return (
@@ -79,16 +92,22 @@ export default function DashboardPage() {
       ) : (
         <div className="space-y-6">
           {/* Connected Wallet Overview */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="p-4 rounded-xl border border-slate-800 bg-slate-900/60 space-y-1">
-              <span className="text-xs text-slate-500">Connected Stellar Address</span>
+              <span className="text-xs text-slate-500">Connected Address</span>
               <p className="font-mono text-sm font-bold text-emerald-400">
                 {truncateAddress(address, 6)}
               </p>
             </div>
             <div className="p-4 rounded-xl border border-slate-800 bg-slate-900/60 space-y-1">
-              <span className="text-xs text-slate-500">Active Role Mode</span>
+              <span className="text-xs text-slate-500">Role Mode</span>
               <p className="text-sm font-bold text-white capitalize">{activeRole}</p>
+            </div>
+            <div className="p-4 rounded-xl border border-slate-800 bg-slate-900/60 space-y-1">
+              <span className="text-xs text-slate-500">Total Platform Impact</span>
+              <p className="text-sm font-bold text-emerald-400">
+                {formatXLM(analytics?.totalFundsRaised || "0")}
+              </p>
             </div>
             <div className="p-4 rounded-xl border border-slate-800 bg-slate-900/60 space-y-1">
               <span className="text-xs text-slate-500">Network Status</span>
@@ -100,27 +119,46 @@ export default function DashboardPage() {
           </div>
 
           {activeRole === "donor" && (
-            <Card className="border-slate-800 bg-slate-900/60">
-              <CardHeader>
-                <CardTitle className="text-lg font-bold text-white">Your Donation Provenance History</CardTitle>
-                <CardDescription className="text-xs text-slate-400">
-                  Track how your contributed XLM moves from campaign vaults into verified beneficiary payout batches.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="border border-slate-800 rounded-xl overflow-hidden text-xs">
-                  <div className="grid grid-cols-4 bg-slate-950 p-3 font-semibold text-slate-400 border-b border-slate-800">
-                    <span>Campaign</span>
-                    <span>Amount Donated</span>
-                    <span>Status</span>
-                    <span>Payout Provenance</span>
+            <div className="space-y-6">
+              <Card className="border-slate-800 bg-slate-900/60">
+                <CardHeader>
+                  <CardTitle className="text-lg font-bold text-white">Your Donation Provenance History</CardTitle>
+                  <CardDescription className="text-xs text-slate-400">
+                    Track how your contributed XLM moves from campaign vaults into verified beneficiary payout batches.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="border border-slate-800 rounded-xl overflow-hidden text-xs">
+                    <div className="grid grid-cols-4 bg-slate-950 p-3 font-semibold text-slate-400 border-b border-slate-800">
+                      <span>Campaign</span>
+                      <span>Amount Donated</span>
+                      <span>Status</span>
+                      <span>Payout Provenance</span>
+                    </div>
+                    <div className="p-4 text-center text-slate-500">
+                      No active donations recorded yet for address {truncateAddress(address, 4)}. Browse campaigns to contribute!
+                    </div>
                   </div>
-                  <div className="p-4 text-center text-slate-500">
-                    No active donations recorded yet for address {truncateAddress(address, 4)}. Browse campaigns to contribute!
-                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Activity Preview */}
+              <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-base font-bold text-white flex items-center gap-2">
+                    <BarChart3 className="h-5 w-5 text-emerald-400" />
+                    <span>Recent Live Activity Preview</span>
+                  </h3>
+                  <Link href="/activity">
+                    <Button variant="ghost" size="sm" className="text-xs text-emerald-400 hover:text-emerald-300">
+                      View All Activity
+                      <ArrowRight className="h-3.5 w-3.5 ml-1" />
+                    </Button>
+                  </Link>
                 </div>
-              </CardContent>
-            </Card>
+                <ActivityFeedList limit={3} />
+              </div>
+            </div>
           )}
 
           {activeRole === "charity" && (
@@ -138,6 +176,7 @@ export default function DashboardPage() {
                     <p className="text-slate-400">Set fundraising goal and metadata on-chain</p>
                   </div>
                   <Button size="sm" className="bg-emerald-600 hover:bg-emerald-500">
+                    <PlusCircle className="h-4 w-4 mr-1.5" />
                     Create Campaign
                   </Button>
                 </div>
@@ -153,8 +192,11 @@ export default function DashboardPage() {
                   Verify charity organization credentials and monitor platform-wide analytics.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="text-xs text-slate-400">
-                Admin controls active. Contract initialization status verified on Stellar Testnet.
+              <CardContent className="text-xs text-slate-400 space-y-2">
+                <p>Admin controls active. Contract initialization status verified on Stellar Testnet.</p>
+                <Link href="/analytics" className="inline-block text-emerald-400 underline font-semibold">
+                  Open Platform Analytics Summary
+                </Link>
               </CardContent>
             </Card>
           )}

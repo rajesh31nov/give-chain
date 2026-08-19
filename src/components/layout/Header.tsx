@@ -3,7 +3,16 @@
 import React from "react";
 import Link from "next/link";
 import { WalletButton } from "@/components/wallet/WalletButton";
-import { HeartHandshake, ShieldCheck, LayoutDashboard, Layers, Activity, Receipt } from "lucide-react";
+import {
+  HeartHandshake,
+  ShieldCheck,
+  LayoutDashboard,
+  Layers,
+  Activity,
+  Receipt,
+  BarChart3,
+  Settings,
+} from "lucide-react";
 
 export const Header: React.FC = () => {
   return (
@@ -24,7 +33,7 @@ export const Header: React.FC = () => {
             </div>
           </Link>
 
-          <nav className="hidden md:flex items-center space-x-6">
+          <nav className="hidden lg:flex items-center space-x-5">
             <Link
               href="/campaigns"
               className="flex items-center space-x-1.5 text-sm font-medium text-slate-300 hover:text-white transition-colors"
@@ -38,7 +47,7 @@ export const Header: React.FC = () => {
               className="flex items-center space-x-1.5 text-sm font-medium text-slate-300 hover:text-white transition-colors"
             >
               <Activity className="h-4 w-4 text-teal-400" />
-              <span>Activity Feed</span>
+              <span>Activity</span>
             </Link>
 
             <Link
@@ -46,7 +55,15 @@ export const Header: React.FC = () => {
               className="flex items-center space-x-1.5 text-sm font-medium text-slate-300 hover:text-white transition-colors"
             >
               <Receipt className="h-4 w-4 text-cyan-400" />
-              <span>Transaction Center</span>
+              <span>Transactions</span>
+            </Link>
+
+            <Link
+              href="/analytics"
+              className="flex items-center space-x-1.5 text-sm font-medium text-slate-300 hover:text-white transition-colors"
+            >
+              <BarChart3 className="h-4 w-4 text-amber-400" />
+              <span>Analytics</span>
             </Link>
 
             <Link
@@ -56,11 +73,19 @@ export const Header: React.FC = () => {
               <LayoutDashboard className="h-4 w-4 text-purple-400" />
               <span>Dashboard</span>
             </Link>
+
+            <Link
+              href="/settings"
+              className="flex items-center space-x-1.5 text-sm font-medium text-slate-300 hover:text-white transition-colors"
+            >
+              <Settings className="h-4 w-4 text-slate-400" />
+              <span>Settings</span>
+            </Link>
           </nav>
         </div>
 
         <div className="flex items-center space-x-4">
-          <div className="hidden lg:flex items-center space-x-1.5 text-xs text-slate-400 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-full">
+          <div className="hidden xl:flex items-center space-x-1.5 text-xs text-slate-400 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-full">
             <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
             <span>Stellar Testnet</span>
           </div>
