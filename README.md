@@ -263,6 +263,11 @@ jobs:
 
 ---
 
+## ⚡ Demo Video Link of Website
+Link (Drive) : https://drive.google.com/drive/folders/1Xr7Ihb8hOcXHjFmzGQ3kmFnLwepOFYLO?dmr=1&ec=wgc-drive-%5Bmodule%5D-goto
+
+---
+
 ## 🚀 Screenshots of the Website
 
 ### Landing Page
